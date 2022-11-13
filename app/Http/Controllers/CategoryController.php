@@ -114,7 +114,7 @@ class CategoryController extends Controller
         //    if(File::exists($category->image)){
         //         File::delete($category->image);
         //      }
-         return redirect()->route('admin.category.list', app()->getLocale())->with('success', "service updated successfully");
+         return redirect()->route('admin.category.list')->with('success', "service updated successfully");
 
     }
 
@@ -131,10 +131,10 @@ class CategoryController extends Controller
         if(File::exists($destination)){
             File::delete($destination);
         }else{
-            return redirect()->route('admin.category.list', app()->getLocale())->with('error','Service Field delete');
+            return redirect()->route('admin.category.list')->with('error','Service Field delete');
         }
         $category->delete();
 
-        return redirect()->route('admin.category.list', app()->getLocale())->with('success','Service Deleted Successfully');
+        return redirect()->route('admin.category.list')->with('success','Service Deleted Successfully');
     }
 }

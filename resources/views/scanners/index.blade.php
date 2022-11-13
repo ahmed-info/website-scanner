@@ -8,30 +8,34 @@
             </div>
             <!--------------------Slider 1------------->
             <div class="heading">
-                @foreach ( $categories as $category)
+                <h1>{{$cate->name_en}} Scanner</h1>
+
+                {{-- @foreach ( $categories as $category)
 
                 <h1>{{$category->name_en}} Scanner</h1>
-                @endforeach
+                @endforeach --}}
             </div>
 
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     @foreach ($products as $product)
+                    <a href="{{route('productDetails',["id"=>$product->id])}}">
                     <div class="swiper-slide">
                         <div class="slider-box">
                             <p class="time">New</p>
                             <div class="img-box">
                                 <img src="{{asset($product->image)}}">
                             </div>
-                            <p class="detail bg-dark w-100 h-40 text-white">
+                            <div  class="price pb-2">Price {{$product->price}} $</div>
+                            <p  class="detail d-block bg-dark w-100 text-white">
                                 {{$product->title_en}}
-                                <a href="#" class="price">Price {{$product->price}} $</a>
                             </p>
                             <div class="cart">
-                                <a href="#">Add to Cart</a>
+                                <a href="{{route('productDetails',["id"=>$product->id])}}">More Details</a>
                             </div>
                         </div>
                     </div>
+                </a>
                     @endforeach
 
 

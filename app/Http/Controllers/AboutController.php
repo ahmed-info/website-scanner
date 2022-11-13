@@ -93,7 +93,7 @@ class AboutController extends Controller
             'title_ar' =>'required|string',
             'description_en' =>'required|max:255',
            'description_ar' =>'required|max:255',
-            
+
             'image' => 'image'
          ]);
          $about = About::find($id);
@@ -111,7 +111,7 @@ class AboutController extends Controller
              //$Services->bc_img = 'storage/img/service/bc_img.'.$img_file->getClientOriginalExtension();
          }
           $about->save();
-         return redirect()->route('admin.about.list', app()->getLocale())->with('success', "service updated successfully");
+         return redirect()->route('admin.about.list')->with('success', "service updated successfully");
 
     }
 
@@ -128,10 +128,10 @@ class AboutController extends Controller
         if(File::exists($destination)){
             File::delete($destination);
         }else{
-            return redirect()->route('admin.about.list', app()->getLocale())->with('error','Service Field delete');
+            return redirect()->route('admin.about.list')->with('error','Service Field delete');
         }
         $about->delete();
 
-        return redirect()->route('admin.about.list', app()->getLocale())->with('success','Service Deleted Successfully');
+        return redirect()->route('admin.about.list')->with('success','Service Deleted Successfully');
     }
 }

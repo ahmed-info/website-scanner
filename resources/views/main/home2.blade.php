@@ -13,7 +13,7 @@
         </header>
     </main>
     <section class="py-5" id="sec">
-        <div class="container px-5" style="text-align: {{ app()->getLocale() == 'en' ? 'left' : 'right' }}">
+        <div class="container px-5" style="text-align: left">
             {{-- <h1 class="fw-bolder fs-5 mb-4">depart</h1> --}}
             <div class="card border-0 shadow rounded-3 overflow-hidden">
                 <div class="card-body p-0">

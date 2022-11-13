@@ -17,7 +17,9 @@
     <link href="{{ asset('css/user_style.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/swiper.min.css') }}" rel="stylesheet" />
-
+    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     {{-- <link href="{{ asset('css/headers.css') }}" rel="stylesheet" /> --}}
     <style>
@@ -68,71 +70,79 @@
 
 <body id="page-top" dir="ltr">
     <!-- Navigation-->
-    <header class="p-3 bg-dark fixed-top">
+    <header class="p-3 bg-white fixed-top">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
                 </a>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="{{ route('home') }}" class="nav-link px-2 text-secondary">Home</a></li>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center fw-bold mb-md-0">
+                    <li><a href="{{ route('home') }}" class="nav-link px-2 text-secondary">@lang('messages.Home')</a></li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <li class="nav-item dropdown fw-bold">
+                        <a class="nav-link dropdown-toggle text-secondary" href="#"  role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Scanners
+                            @lang('messages.scanners')
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu text-secondary">
                             @foreach ($categories as $category)
-
-                            <li><a class="dropdown-item" href="{{route('product',["id"=>$category->id])}}">{{$category->name_en}}</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{{ route('category.id', ['id' => $category->id]) }}">{{ $category->name_en }}</a>
+                                </li>
                             @endforeach
 
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    <li class="nav-item dropdown fw-bold">
+                        <a class="nav-link dropdown-toggle text-secondary" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Solutions
+                            @lang('messages.Solutions')
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{route('solution')}}">Archiving solutions</a></li>
+                            <li><a class="dropdown-item" href="{{ route('solution') }}"> @lang('messages.ArchivingSolutions')</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Website development</a></li>
-                            <li><a class="dropdown-item" href="#">Mobile Apps</a></li>
+                            <li><a class="dropdown-item" href="#">@lang('messages.WebsiteDevelopment')</a></li>
+                            <li><a class="dropdown-item" href="#">@lang('messages.MobileApps')</a></li>
                         </ul>
                     </li>
 
-                    <li><a href="{{ route('blog') }}" class="nav-link px-2 text-white">Blog</a></li>
-                    <li><a href="{{ route('contact') }}" class="nav-link px-2 text-white">Contact Us</a></li>
-                    <li><a href="{{ route('about') }}" class="nav-link px-2 text-white">About</a></li>
+                    <li><a href="{{ route('blog') }}" class="nav-link px-2 text-secondary fw-bold">@lang('messages.Blog')</a></li>
+                    <li><a href="{{ route('contact') }}" class="nav-link px-2 text-secondary fw-bold">@lang('messages.contactus')</a></li>
+                    <li><a href="{{ route('about') }}" class="nav-link px-2 text-secondary fw-bold">@lang('messages.about')</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
+                            @if (session()->get('locale') == 'ar')
+                            Arabic
+                            @else
                             English
+                            @endif
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">English</a></li>
-                            <li><a class="dropdown-item" href="#">Arabic</a></li>
+                                <li><a class="dropdown-item" href="{{ url('locale/en') }}"><img src="{{ asset('storage/image/usa.png')}}" alt="en"> English</a></li>
+                                <li><a class="dropdown-item" href="{{ url('locale/ar') }}"><img src="{{ asset('storage/image/ksa.png')}}" alt="ar"> Arabic</a></li>
+
 
                         </ul>
                     </li>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="{{ __('messages.search') }}"
                         aria-label="Search">
                 </form>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2"><a href="{{route('auth.login')}}">Login</a></button>
-                    <button type="button" class="btn btn-warning"><a href="{{route('auth.register')}}">Sign-up</a></button>
+                    <button type="button" class="btn btn-outline-light me-2"><a
+                            href="{{ route('auth.login') }}">@lang('messages.login')</a></button>
+                    <button type="button" class="btn btn-warning"><a
+                            href="{{ route('auth.register') }}">@lang('messages.signUp')</a></button>
                 </div>
             </div>
         </div>
@@ -157,24 +167,14 @@
             <!-- Left -->
 
             <!-- Right -->
-            <div style="color:#FCD61C">
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-facebook-f"></i>
+            <div style="color:#FCD61C;";>
+                <a href="https://www.facebook.com/Scanner.market/" class="me-4 text-reset">
+                    <i class="fab fa-facebook-f" style="font-size:25px;"></i>
                 </a>
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-google"></i>
-                </a>
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="" class="me-4 text-reset">
-                    <i class="fab fa-github"></i>
+
+
+                <a href="https://www.instagram.com/Scanner.market/" class="me-4 text-reset">
+                    <i class="fab fa-instagram" style="font-size:25px;"></i>
                 </a>
             </div>
             <!-- Right -->
@@ -206,11 +206,11 @@
                             Products
                         </h6>
                         @foreach ($categories as $category)
-                        <p class="nav-link px-2 text-white">
-                            <a href="{{route('product',["id"=>$category->id])}}" class="text-reset">{{$category->name_en}}</a>
+                            <p class="nav-link px-2 text-white">
+                                <a href="{{ route('category.id', ['id' => $category->id]) }}"
+                                    class="text-reset">{{ $category->name_en }}</a>
 
-                        </p>
-
+                            </p>
                         @endforeach
 
 
@@ -224,19 +224,20 @@
                             Useful links
                         </h6>
                         <p class="nav-link px-2 text-white">
-                            <a href="{{ route('home') }}" class="text-reset">Home</a>
+                            <a href="{{ route('home') }}" class="text-reset">@lang('messages.Home')</a>
                         </p>
                         <p class="nav-link px-2 text-white">
                             {{-- <a href="{{ route('scanners') }}" class="text-reset">Scanners</a> --}}
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     Scanners
                                 </a>
                                 <ul class="dropdown-menu">
                                     @foreach ($categories as $category)
-
-                                    <li><a class="dropdown-item" href="{{route('product',["id"=>$category->id])}}">{{$category->name_en}}</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="{{ route('category.id', ['id' => $category->id]) }}">{{ $category->name_en }}</a>
+                                        </li>
                                     @endforeach
 
                                 </ul>
@@ -287,6 +288,28 @@
     <!-- Bootstrap core JS-->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <!-- jQuery -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+
+<!-- Bootstrap 4 -->
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- AdminLTE App -->
+<script src="{{ asset('js/adminlte.min.js') }}"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('js/demo.js') }}"></script>
+
+<script>
+  $(document).ready(function() {
+    $('.product-image-thumb').on('click', function () {
+      var $image_element = $(this).find('img')
+      $('.product-image').prop('src', $image_element.attr('src'))
+      $('.product-image-thumb.active').removeClass('active')
+      $(this).addClass('active')
+    })
+  })
+</script>
     <script src="{{ asset('js/user_js.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>

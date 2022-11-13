@@ -52,7 +52,7 @@
                                         <form action="{{route('admin.product.destroy',["id"=>$product->id, "language"=>app()->getLocale()])}}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="submit" name="submit" value="Delete" class="btn btn-danger">
+                                            <input type="submit" onclick="return confirm('Are You Sure?');" name="submit" value="Delete" class="btn btn-danger">
                                         </form>
                                     </div>
                                 </div>

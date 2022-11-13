@@ -40,6 +40,28 @@
                     <label for="price"><h4>Price</h4></label>
                     <input type="number" class="form-control" id="price" name="price" value="{{$product->price}}">
                 </div>
+                <div class="form-group mb-2">
+                    <label for="type">
+                        <h4>Type</h4>
+                    </label>
+                    <input type="text" class="form-control" id="type" name="type" value="{{$product->type}}"
+                        placeholder="Enter Type *">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="model">
+                        <h4>Model</h4>
+                    </label>
+                    <input type="text" class="form-control" id="model" name="model" value="{{$product->model}}"
+                        placeholder="Enter Model *">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="shipping_weight">
+                        <h4>Shipping Weight</h4>
+                    </label>
+                    <input type="text" class="form-control" id="shipping_weight" name="shipping_weight" value="{{$product->shipping_weight}}"
+                        placeholder="Enter shipping weight *">
+                </div>
+
             </div>
 
             <div class="form-group col-md-4 mt-3">
@@ -65,7 +87,39 @@
                         style="height: 112px">{{$product->description_ar}}</textarea>
                 </div>
 
+                <div class="form-group mb-2">
+                    <label for="price_old">
+                        <h4>Price old</h4>
+                    </label>
+                    <input type="number" class="form-control" id="price_old" name="price_old"
+                     value="{{$product->price_old}}"   placeholder="Enter Price old *">
+                </div>
 
+
+
+
+
+                <div class="form-group mb-2">
+                    <label for="brand">
+                        <h4>Brand</h4>
+                    </label>
+                    <input type="text" class="form-control" id="brand" name="brand" value="{{$product->brand}}"
+                        placeholder="Enter Brand *">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="stock">
+                        <h4>Stock</h4>
+                    </label>
+                    <input type="text" class="form-control" id="stock" name="stock" value="{{$product->stock}}"
+                        placeholder="Enter Stock *">
+                </div>
+                <div class="form-group mb-2">
+                    <label for="shipping_dimensions">
+                        <h4>Shipping Dimensions</h4>
+                    </label>
+                    <input type="text" class="form-control" id="shipping_dimensions" name="shipping_dimensions" value="{{$product->shipping_dimensions}}"
+                        placeholder="Enter shipping Dimensions *">
+                </div>
             </div>
 
             <div class="form-group col-md-4 mt-3">

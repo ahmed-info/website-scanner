@@ -18,8 +18,8 @@
 
                 </div>
 
-                <h4 class=" fw-bold text-center text-warning">{{$about->title_en}}</h4>
-                <p>{{$about->description_en}}</p>
+                <h4 class=" fw-bold text-center text-warning">{{$about->title_.session()->get('locale')}}</h4>
+                <p>{{$about->{'description_'.app()->getLocale()} }}</p>
                     <p><a class="btn btn-secondary" href="{{route('aboutDetails',["id"=>$about->id])}}">View details »</a></p>
             </div>
             @endforeach

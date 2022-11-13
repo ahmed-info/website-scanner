@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -8,6 +11,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SolutionController;
+use App\Http\Controllers\ServiceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,15 +24,30 @@ use App\Http\Controllers\SolutionController;
 |
 */
 
-Route::get('/', [HomeController::class,'home'])->name('home');
-Route::get('/about', [HomeController::class,'about'])->name('about');
-Route::get('/scanners', [HomeController::class,'scanners'])->name('scanners');
-Route::get('/blog', [HomeController::class,'blog'])->name('blog');
-Route::get('/aboutDetails/{id}', [HomeController::class,'aboutDetails'])->name('aboutDetails');
-Route::get('/product/{id}', [HomeController::class,'product'])->name('product');
-Route::get('/contact', [HomeController::class,'contact'])->name('contact');
-Route::get('/auth/register', [AuthController::class,'register'])->name('auth.register');
-Route::get('/auth/login', [AuthController::class,'login'])->name('auth.login');
+Route::group(['middleware'=>'web'], function(){
+    // Route::get('/',function(){
+    //     return "ahmed";
+    // });
+    Route::get('/', [HomeController::class,'home'])->name('home');
+    Route::get('/about', [HomeController::class,'about'])->name('about');
+    Route::get('/scanners', [HomeController::class,'scanners'])->name('scanners');
+    Route::get('/blog', [HomeController::class,'blog'])->name('blog');
+    Route::get('/aboutDetails/{id}', [HomeController::class,'aboutDetails'])->name('aboutDetails');
+    Route::get('/productDetails/{id}', [HomeController::class,'productDetails'])->name('productDetails');
+    //Route::get('/product/{id}', [HomeController::class,'product'])->name('product');
+    Route::get('/category/{id}', [HomeController::class,'category'])->name('category.id');
+    Route::get('/contact', [HomeController::class,'contact'])->name('contact');
+    Route::get('/auth/register', [AuthController::class,'register'])->name('auth.register');
+    Route::get('/auth/login', [AuthController::class,'login'])->name('auth.login');
+    Route::get('/change-language/{lang}',[ServiceController::class,'change_locale'])->name('changeLocale');
+    Route::get('/changeLang/{lang}',[ServiceController::class,'changeLang']);
+    Route::get('locale/{locale}', function($locale){
+        session()->put('locale', $locale);
+        return Redirect::back();
+    });
+});
+
+
 //////////////////////////////////Start Admin Category///////////////////////////////////////
 Route::get('/admin/category/create',[CategoryController::class, 'create'])->name('admin.category.create');
 Route::post('/admin/category/create',[CategoryController::class, 'store'])->name('admin.category.store');
@@ -71,3 +91,13 @@ Route::delete('/admin/about/destroy/{id}',[AboutController::class, 'destroy'])->
 
 Route::get('solution',[SolutionController::class,'index'])->name('solution');
 //////////////////////////End Solution///////////////////////
+
+//////////////////////// start language //////////////////////////
+
+
+
+Route::get('/test',function(){
+    //App::setLocale('fr');
+    dd(App::getLocale());
+});
+Route::get('/changeLang',[ServiceController::class,'changeLang']);

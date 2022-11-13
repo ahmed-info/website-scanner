@@ -21,6 +21,13 @@ class CreateProductsTable extends Migration
             $table->longText('description_ar');
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
+            $table->decimal('price_old', 10, 2);
+            $table->string('type');
+            $table->string('brand');
+            $table->string('model');
+            $table->string('stock')->nullable();
+            $table->string('shipping_weight')->nullable();
+            $table->string('shipping_dimensions')->nullable();
             $table->bigInteger('category_id')->unsigned();
             //$table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->on('categories')->references('id')

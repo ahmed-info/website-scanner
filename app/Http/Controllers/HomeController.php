@@ -10,18 +10,37 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Blog;
 use App\Models\About;
+use App\Models\Image;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
+
 class HomeController extends Controller
 {
 
     public function home(){
-        $categories = Category::all();
-        $products = Product::all();
+        
+        //$categories = Category::all();
+        //$products = Product::all();
+
+        $products = FacadesDB::table('products')->orderBy('id', 'desc')->get();
+        $categories = FacadesDB::table('categories')->orderBy('id', 'desc')->get();
         //echo $categories;
         return view('main.home', compact(['categories','products']));
     }
+    public function category($id){
+        $categories= Category::all();
+        $cate= Category::find($id);
 
+        //$products = Product::get()->where('category_id', $id);
+        $lowerType= Str::of('Scanner')->lower();
+        $products = Product::where('category_id', $id)->
+        where('type',$lowerType)->get();
+        //$categories= Category::find($id);
+        //return $categories;
+        return view('scanners.index', compact(['categories','products','cate']));
+    }
     public function about()
     {
         $categories = Category::all();
@@ -56,15 +75,19 @@ class HomeController extends Controller
         //return $products;
 
         return view('scanners.index', compact(['categories','products']));
+    }
+
+    public function productDetails($id){
+        $categories = Category::all();
+        $product = Product::find($id);
+        //return "product details";
+        //$images = Image::select($id)->get();
+        $images = DB::table('images')->where('product_id', $id)->get();
+
+        return view('main.product_details', compact(['categories','product','images']));
 
     }
-    public function product($id){
-        $products = Product::get()->where('category_id', $id);
-        $categories= Category::get()->where('id',$id);
-        //$categories= Category::find($id);
-        //return $categories;
-        return view('scanners.index', compact(['categories','products']));
-    }
+
     public function contact()
     {
         $categories = Category::all();

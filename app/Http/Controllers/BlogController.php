@@ -113,7 +113,7 @@ class BlogController extends Controller
              //$Services->bc_img = 'storage/img/service/bc_img.'.$img_file->getClientOriginalExtension();
          }
           $blog->update();
-         return redirect()->route('admin.blog.list', app()->getLocale())->with('success', "service updated successfully");
+         return redirect()->route('admin.blog.list')->with('success', "service updated successfully");
 
     }
 
@@ -130,10 +130,10 @@ class BlogController extends Controller
         if(File::exists($destination)){
             File::delete($destination);
         }else{
-            return redirect()->route('admin.blog.list', app()->getLocale())->with('error','Service Field delete');
+            return redirect()->route('admin.blog.list')->with('error','Service Field delete');
         }
         $blog->delete();
 
-        return redirect()->route('admin.blog.list', app()->getLocale())->with('success','Service Deleted Successfully');
+        return redirect()->route('admin.blog.list')->with('success','Service Deleted Successfully');
     }
 }

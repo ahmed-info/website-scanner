@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\product;
+use App\Models\Image;
 use DB;
 use App\Models\Blog;
 use Illuminate\Support\Facades\DB as FacadesDB;
@@ -44,10 +45,18 @@ class ProductController extends Controller
         $this->validate($request,[
            'title_en'=>'required|string',
            'title_ar'=>'required|string',
-           'description_en' =>'required|max:255',
-           'description_ar' =>'required|max:255',
-           'image' => 'required|image',
-           'price' => 'required|numeric',
+        //    'description_en' =>'required|max:255',
+        //    'description_ar' =>'required|max:255',
+        //    'image' => 'required|image',
+        //    'price' => 'required|numeric',
+        //    'price_old' => 'numeric',
+        //    'type'=>'required|string',
+        //    'brand'=>'required|string',
+        //    'model'=>'required|string',
+        //    'stock'=>'string',
+        //    'shipping_weight'=>'string',
+        //    'shipping_dimensions'=>'string',
+
 
         ]);
         $category = Category::findOrFail($request->category_id);
@@ -66,9 +75,32 @@ class ProductController extends Controller
             //$Services->bc_img = 'storage/img/service/bc_img.'.$img_file->getClientOriginalExtension();
         }
         $products->price = $request->price;
+        $products->price_old = $request->price_old;
+        $products->type = $request->type;
+        $products->brand = $request->brand;
+        $products->model = $request->model;
+        $products->stock = $request->stock;
+        $products->shipping_weight = $request->shipping_weight;
+        $products->shipping_dimensions = $request->shipping_dimensions;
         $products->category_id = $request->category_id;
-        // $products->save();
+        $products->save();
+        //return $request-all();
         $category->products()->save($products);
+
+        //Images
+        if($request->hasFile('images')){
+            $files = $request->file("images");
+            foreach($files as $file){
+                $images = new Image;
+                $imageName = time().'_'.$file->getClientOriginalName();
+                $file->storeAs('public/image/product', $imageName);
+
+                $images->product_id = $products->id;
+                $images->image = 'storage/image/product/'.$imageName;
+
+                $images->save();
+            }
+        }
         return redirect()->route('admin.product.list')->with('success', "New service created successfully");
     }
 
@@ -106,6 +138,13 @@ class ProductController extends Controller
             'description_ar' =>'required|max:255',
             'price' => 'required|numeric',
             'image' => 'image',
+            'price_old' => 'numeric',
+           'type'=>'required|string',
+           'brand'=>'required|string',
+           'model'=>'required|string',
+           'stock'=>'string',
+           'shipping_weight'=>'string',
+           'shipping_dimensions'=>'string',
             'category_id'=> 'required'
          ]);
          $product = Product::find($id);
@@ -123,11 +162,18 @@ class ProductController extends Controller
              //$img_file->storeAs('public/img/service','bc_img.'.$img_file->getClientOriginalExtension());
              //$Services->bc_img = 'storage/img/service/bc_img.'.$img_file->getClientOriginalExtension();
          }
-         $product->price = $request->price;
-         $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        $products->price_old = $request->price_old;
+        $products->type = $request->type;
+        $products->brand = $request->brand;
+        $products->model = $request->model;
+        $products->stock = $request->stock;
+        $products->shipping_weight = $request->shipping_weight;
+        $products->shipping_dimensions = $request->shipping_dimensions;
+        $product->category_id = $request->category_id;
 
           $product->update();
-         return redirect()->route('admin.product.list', app()->getLocale())->with('success', "service updated successfully");
+         return redirect()->route('admin.product.list')->with('success', "service updated successfully");
 
     }
 
@@ -144,10 +190,10 @@ class ProductController extends Controller
         if(File::exists($destination)){
             File::delete($destination);
         }else{
-            return redirect()->route('admin.product.list', app()->getLocale())->with('error','Service Field delete');
+            return redirect()->route('admin.product.list')->with('error','Service Field delete');
         }
         $product->delete();
 
-        return redirect()->route('admin.product.list', app()->getLocale())->with('success','Service Deleted Successfully');
+        return redirect()->route('admin.product.list')->with('success','Service Deleted Successfully');
     }
 }
